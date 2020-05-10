@@ -46,7 +46,7 @@ public class MyMap : MKMapView, MKMapViewDelegate {
         } else if angleCamera > 90 {
             angleCamera = fabs(angleCamera - 180)
         }
-        let angleRad = M_PI * angleCamera / 180 // map rotation in radians
+        let angleRad = Double.pi * angleCamera / 180 // map rotation in radians
         let width = Double(self.frame.size.width)
         let height = Double(self.frame.size.height)
         let heightOffset : Double = 20 // the offset (status bar height) which is taken by MapKit into consideration to calculate visible area height
@@ -59,7 +59,7 @@ public class MyMap : MKMapView, MKMapViewDelegate {
     public func getRotation() -> Double? {
         // function gets current map rotation based on the transform values of MKScrollContainerView
         if self.mapContainerView != nil {
-            var rotation = fabs(180 * asin(Double(self.mapContainerView!.transform.b)) / M_PI)
+            var rotation = fabs(180 * asin(Double(self.mapContainerView!.transform.b)) / Double.pi)
             if self.mapContainerView!.transform.b <= 0 {
                 if self.mapContainerView!.transform.a >= 0 {
                     // do nothing
@@ -100,7 +100,7 @@ public class MyMap : MKMapView, MKMapViewDelegate {
         // function starts tracking map changes
         if self.changesTimer == nil {
             self.changesTimer = Timer(timeInterval: 0.1, target: self, selector: #selector(MyMap.trackChanges), userInfo: nil, repeats: true)
-            RunLoop.current.add(self.changesTimer!, forMode: RunLoopMode.commonModes)
+            RunLoop.current.add(self.changesTimer!, forMode: RunLoop.Mode.common)
         }
     }
     
